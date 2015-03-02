@@ -4,15 +4,17 @@ var etoa = require('../etoa.js')
 
 test('basic', function (t) {
   var emitter = new EE()
-  var array = etoa(emitter)
+  var array = etoa(emitter, ['ignore', 'alsoignore'])
 
   emitter.emit('foo', 1, 2, 3)
+  emitter.emit('ignore', 'should not see this')
   emitter.emit('bar', { x: 1 })
 
   // nested events get tracked as well
   var subemit = new EE()
   emitter.emit('sub', subemit)
   subemit.emit('childEvent', { some: 'data' })
+  subemit.emit('alsoignore', 'should not see this')
   subemit.emit('anotherone', { some: 'data' }, 'many', 'args')
 
   // CAVEAT!
