@@ -2,6 +2,14 @@
 
 Put a bunch of emitted events in an array, for testing.
 
+If any of the emitted arguments are event emitters, then they'll also
+be tracked, and replaced in the array with their tracking array.
+(This is less confusing in practice than it sounds in text, see
+below.)  The only caveat is that the events in the child event emitter
+and in the parent are not preserved in order, so this lib doesn't tell
+you whether the child events happened before or after any subsequent
+parent events.
+
 ## USAGE
 
 ```
@@ -20,7 +28,10 @@ emitter.emit('sub', subemit)
 subemit.emit('childEvent', { some: 'data' })
 subemit.emit('anotherone', { some: 'data' }, 'many', 'args')
 
-// CAVEAT!
+// CAVEAT!  See above in the wordy part of this readme.
+// Note that the blaz/blorrg event comes after the child, and there's
+// no way to know that the child 'order not preserved' event happened
+// after.
 emitter.emit('blaz', 'blorrg')
 subemit.emit('order', 'not', 'preserved between child and parent')
 
