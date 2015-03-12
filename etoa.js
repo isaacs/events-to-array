@@ -1,6 +1,6 @@
 module.exports = eventsToArray
 
-var EE = require('events')
+var EE = require('events').EventEmitter
 function eventsToArray (ee, ignore) {
   ignore = ignore || []
   var array = []

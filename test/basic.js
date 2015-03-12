@@ -1,5 +1,5 @@
 var test = require('tap').test
-var EE = require('events')
+var EE = require('events').EventEmitter
 var etoa = require('../etoa.js')
 
 test('basic', function (t) {
