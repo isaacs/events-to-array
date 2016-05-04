@@ -3,6 +3,9 @@
   "version": "1.0.2",
   "description": "Put a bunch of emitted events in an array, for testing.",
   "main": "etoa.js",
+  "files": [
+    "etoa.js"
+  ],
   "directories": {
     "test": "test"
   },
