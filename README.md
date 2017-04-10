@@ -63,3 +63,5 @@ events-to-array list so that nested events are caught.
 This is handy, for example, for swapping out large `Buffer` objects
 with something like `{type: 'buffer', length: 123456}` rather than
 blow up the JSON fixtures.
+
+The map function is called on the args list as `map(arg, index, list)`

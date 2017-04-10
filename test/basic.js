@@ -50,11 +50,16 @@ test('ignore nothing', function (t) {
 test('the map is not the territory', function (t) {
   var emitter = new EE()
   // cast all to strings
-  var array = etoa(emitter, ['ignore'], function (args) {
-    return args.map(function (arg) { return arg + '' })
+  var array = etoa(emitter, ['ignore'], function (arg) {
+    return arg + ''
   })
 
   emitter.emit('foo', new Buffer('hello'))
-  t.same(array, [ ['foo', 'hello' ] ])
+  var sub = new EE()
+  emitter.emit('sub', sub)
+  sub.emit('obj', { toString: function () { return 'toString fn' } })
+  t.same(array,
+  [ ['foo', 'hello' ],
+    [ 'sub', [ [ 'obj', 'toString fn' ] ] ] ])
   t.end()
 })
