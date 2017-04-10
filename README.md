@@ -46,9 +46,20 @@ assert.deepEqual(array,
   [ 'blaz', 'blorrg' ] ])
 ```
 
-## `eventsToArray(emitter, [ignoreList])`
+## `eventsToArray(emitter, [ignoreList], [mapFunction])`
 
 Returns an array with all the events emitted by the emitter.
 
 It's your responsibility to know when to check it for the events that
-you expect.
+you expected to have received.
+
+The `ignoreList` is an array of event names to ignore.
+
+The `mapFunction` is a function that takes a list of arguments and
+returns a potentially-mutated array of arguments.  Note that child
+event emitters will already have been swapped out for an
+events-to-array list so that nested events are caught.
+
+This is handy, for example, for swapping out large `Buffer` objects
+with something like `{type: 'buffer', length: 123456}` rather than
+blow up the JSON fixtures.

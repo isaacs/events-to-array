@@ -1,8 +1,9 @@
 module.exports = eventsToArray
 
 var EE = require('events').EventEmitter
-function eventsToArray (ee, ignore) {
+function eventsToArray (ee, ignore, map) {
   ignore = ignore || []
+  map = map || function (x) { return x }
   var array = []
 
   ee.emit = (function (orig) {
@@ -16,7 +17,7 @@ function eventsToArray (ee, ignore) {
             eventsToArray(arg, ignore) :
             arg
         }
-        array.push(args)
+        array.push(map(args))
       }
 
       return orig.apply(this, arguments)

@@ -32,3 +32,29 @@ test('basic', function (t) {
     [ 'blaz', 'blorrg' ] ])
   t.end()
 })
+
+test('ignore nothing', function (t) {
+  var emitter = new EE()
+  var array = etoa(emitter)
+  emitter.emit('foo', 1, 2, 3)
+  emitter.emit('ignore', 'should see this')
+  emitter.emit('bar', { x: 1 })
+  t.same(array,
+  [ [ 'foo', 1, 2, 3 ],
+    [ 'ignore', 'should see this' ],
+    [ 'bar', { x: 1 } ] ])
+
+  t.end()
+})
+
+test('the map is not the territory', function (t) {
+  var emitter = new EE()
+  // cast all to strings
+  var array = etoa(emitter, ['ignore'], function (args) {
+    return args.map(function (arg) { return arg + '' })
+  })
+
+  emitter.emit('foo', new Buffer('hello'))
+  t.same(array, [ ['foo', 'hello' ] ])
+  t.end()
+})
