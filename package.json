@@ -3,15 +3,17 @@
   "version": "1.1.2",
   "description": "Put a bunch of emitted events in an array, for testing.",
   "main": "etoa.js",
-  "files": ["etoa.js"],
-  "directories": {
-    "test": "test"
+  "files": [
+    "etoa.js"
+  ],
+  "engines": {
+    "node": ">=10"
   },
   "devDependencies": {
     "tap": "^16.3.0"
   },
   "scripts": {
-    "test": "tap test/*.js --100",
+    "test": "tap --100",
     "preversion": "npm test",
     "postversion": "npm publish",
     "postpublish": "git push origin --all; git push origin --tags"
