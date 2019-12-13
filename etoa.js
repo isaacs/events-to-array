@@ -1,34 +1,28 @@
+'use strict'
+
+const { EventEmitter } = require('events')
+
 module.exports = eventsToArray
 
-var EE = require('events').EventEmitter
-function eventsToArray (ee, ignore, map) {
-  ignore = ignore || []
-  map = map || function (x) { return x }
-  var array = []
+function eventsToArray (ee, ignore = [], map = x => x) {
+  const array = []
 
-  ee.emit = (function (orig) {
-    return function etoaWrap (ev) {
-      if (ignore.indexOf(ev) === -1) {
-        var l = arguments.length
-        var args = new Array(l)
-        // intentionally sparse array
-        var swap = []
-        for (var i = 0; i < l; i++) {
-          var arg = arguments[i]
-          args[i] = arguments[i]
-          if (arg instanceof EE)
-            swap[i] = eventsToArray(arg, ignore, map)
+  const orig = ee.emit
+  ee.emit = function (...args) {
+    if (!ignore.includes(args[0])) {
+      args = args.map((arg, i, arr) => {
+        if (arg instanceof EventEmitter) {
+          return eventsToArray(arg, ignore, map)
         }
-        args = args.map(map)
-        args = args.map(function (arg, index) {
-          return swap[index] || arg
-        })
-        array.push(args)
-      }
 
-      return orig.apply(this, arguments)
+        return map(arg, i, arr)
+      })
+
+      array.push(args)
     }
-  })(ee.emit)
+
+    return orig.apply(this, args)
+  }
 
   return array
 }
