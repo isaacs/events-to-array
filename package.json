@@ -4,6 +4,7 @@
   "description": "Put a bunch of emitted events in an array, for testing.",
   "main": "etoa.js",
   "files": [
+    "index.d.ts",
     "etoa.js"
   ],
   "engines": {
