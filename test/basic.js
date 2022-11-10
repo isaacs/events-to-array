@@ -54,7 +54,7 @@ test('the map is not the territory', function (t) {
     return arg + ''
   })
 
-  emitter.emit('foo', new Buffer('hello'))
+  emitter.emit('foo', Buffer.from('hello'))
   var sub = new EE()
   emitter.emit('sub', sub)
   sub.emit('obj', { toString: function () { return 'toString fn' } })
