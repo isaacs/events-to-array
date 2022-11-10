@@ -2,10 +2,10 @@
   "name": "events-to-array",
   "version": "2.0.2",
   "description": "Put a bunch of emitted events in an array, for testing.",
-  "main": "etoa.js",
+  "main": "index.js",
   "files": [
     "index.d.ts",
-    "etoa.js"
+    "index.js"
   ],
   "engines": {
     "node": ">=12"

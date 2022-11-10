@@ -1,6 +1,6 @@
 var test = require('tap').test
 var EE = require('events').EventEmitter
-var etoa = require('../etoa.js')
+var etoa = require('../index.js')
 
 test('basic', function (t) {
   var emitter = new EE()
