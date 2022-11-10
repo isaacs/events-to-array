@@ -7,7 +7,7 @@
     "etoa.js"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "devDependencies": {
     "tap": "^16.3.0"
