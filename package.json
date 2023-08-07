@@ -2,20 +2,44 @@
   "name": "events-to-array",
   "version": "2.0.3",
   "description": "Put a bunch of emitted events in an array, for testing.",
-  "main": "index.js",
   "files": [
-    "index.d.ts",
-    "index.js"
+    "dist"
   ],
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/mjs/index.js",
+  "exports": {
+    "./package.json": {
+      "import": "./package.json",
+      "require": "./package.json"
+    },
+    ".": {
+      "import": {
+        "types": "./dist/mjs/index.d.ts",
+        "default": "./dist/mjs/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "devDependencies": {
-    "@types/node": "^18.11.9",
-    "tap": "^16.3.0"
+    "@types/node": "^20.4.8",
+    "prettier": "^2.8.8",
+    "sync-content": "^1.0.2",
+    "tap": "^18.0.0-7"
   },
   "scripts": {
+    "prepare": "tsc -p tsconfig/cjs.json && tsc -p tsconfig/esm.json && bash ./scripts/fixup.sh",
+    "pretest": "npm run prepare",
+    "presnap": "npm run prepare",
     "test": "tap",
+    "snap": "tap",
+    "format": "prettier --write . --loglevel warn --cache",
+    "typedoc": "typedoc --tsconfig tsconfig/esm.json ./src/*.ts",
     "preversion": "npm test",
     "postversion": "npm publish",
     "prepublishOnly": "git push origin --follow-tags"
@@ -26,8 +50,18 @@
   },
   "author": "Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/isaacs/events-to-array/issues"
+  "prettier": {
+    "semi": false,
+    "printWidth": 70,
+    "tabWidth": 2,
+    "useTabs": false,
+    "singleQuote": true,
+    "jsxSingleQuote": false,
+    "bracketSameLine": true,
+    "arrowParens": "avoid",
+    "endOfLine": "lf"
   },
-  "homepage": "https://github.com/isaacs/events-to-array"
+  "dependencies": {
+    "typedoc": "^0.24.8"
+  }
 }

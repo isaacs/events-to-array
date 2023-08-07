@@ -5,25 +5,26 @@ Put a bunch of emitted events in an array, for testing.
 If any of the emitted arguments are event emitters, then they'll also
 be tracked, and replaced in the array with their tracking array.
 (This is less confusing in practice than it sounds in text, see
-below.)  The only caveat is that the events in the child event emitter
+below.) The only caveat is that the events in the child event emitter
 and in the parent are not preserved in order, so this lib doesn't tell
 you whether the child events happened before or after any subsequent
 parent events.
 
 ## USAGE
 
-```
-var assert = require('assert')
-var EE = require('events')
-var etoa = require('events-to-array')
-var emitter = new EE()
-var array = etoa(emitter)
+```js
+import assert = from 'assert'
+import EE = from 'events'
+import { eventsToArray } from 'events-to-array'
+
+const emitter = new EE()
+const array = eventsToArray(emitter)
 
 emitter.emit('foo', 1, 2, 3)
 emitter.emit('bar', { x: 1 })
 
 // nested events get tracked as well
-var subemit = new EE()
+const subemit = new EE()
 emitter.emit('sub', subemit)
 subemit.emit('childEvent', { some: 'data' })
 subemit.emit('anotherone', { some: 'data' }, 'many', 'args')
@@ -56,7 +57,7 @@ you expected to have received.
 The `ignoreList` is an array of event names to ignore.
 
 The `mapFunction` is a function that takes a list of arguments and
-returns a potentially-mutated array of arguments.  Note that child
+returns a potentially-mutated array of arguments. Note that child
 event emitters will already have been swapped out for an
 events-to-array list so that nested events are caught.
 
